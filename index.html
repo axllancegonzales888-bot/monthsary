@@ -1,0 +1,1192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Happy 8th Monthsary 💚</title>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Segoe+UI:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        @font-face {
+            font-family: 'Vintage Melinda';
+            src: url('VintageMelinda.ttf') format('truetype'),
+                 url('VintageMelinda.woff') format('woff');
+        }
+
+        @font-face {
+            font-family: 'Symphonie Calligraphy DEMO';
+            src: url('SymphonieCalligraphyDEMO.ttf') format('truetype');
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        html, body {
+            width: 100%;
+            height: 100%;
+            height: 100vh;
+            height: 100dvh;
+            overflow: hidden;
+            position: fixed;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        body { 
+            background: radial-gradient(circle at center, #021a0c 0%, #052e16 100%);
+            color: #e6fdf2; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center;
+            transition: background 1.5s ease;
+        }
+
+        body.wallpaper-bg {
+            background: url('walpaper art.jpg') no-repeat center center fixed !important;
+            background-size: cover !important;
+        }
+
+        .bg-emoji {
+            position: absolute;
+            font-size: 1.8rem;
+            pointer-events: none;
+            opacity: 0.15;
+            animation: float-up 10s linear infinite;
+        }
+
+        @keyframes float-up {
+            0% { transform: translateY(105vh) rotate(0deg); opacity: 0; }
+            20% { opacity: 0.25; }
+            80% { opacity: 0.25; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        }
+
+        .screen {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+            transform: scale(0.95);
+            pointer-events: none;
+            padding: 12px;
+        }
+        .screen.active { 
+            display: flex; 
+            opacity: 1;
+            transform: scale(1);
+            pointer-events: auto;
+        }
+
+        .screen.fade-out {
+            opacity: 0;
+            transform: scale(1.05);
+        }
+
+        .card {
+            background: rgba(6, 56, 27, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 2px solid rgba(82, 183, 136, 0.4);
+            border-radius: 20px;
+            padding: 20px 14px;
+            text-align: center;
+            max-width: 380px;
+            width: 100%;
+            max-height: 85vh;
+            overflow-y: auto;
+            box-shadow: 0 15px 35px rgba(2, 26, 12, 0.6), 0 0 30px rgba(46, 196, 182, 0.2);
+            z-index: 10;
+        }
+
+        .card h1 {
+            font-size: 1.7rem;
+            color: #b3ffc9;
+            margin-bottom: 15px;
+            text-shadow: 0 0 10px rgba(179, 255, 201, 0.4);
+        }
+
+        .envelope-container {
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            padding: 5px;
+        }
+
+        .envelope-container:hover {
+            transform: scale(1.08) translateY(-5px);
+        }
+
+        .envelope-img {
+            width: min(200px, 65vw);
+            height: auto;
+            filter: drop-shadow(0 10px 20px rgba(2, 26, 12, 0.8)) drop-shadow(0 0 15px rgba(82, 183, 136, 0.4));
+            animation: float-envelope 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes float-envelope {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-8px); }
+        }
+
+        .envelope-hint {
+            margin-top: 12px;
+            font-size: 1rem;
+            color: #b3ffc9;
+            font-weight: 600;
+            text-shadow: 0 0 10px rgba(179, 255, 201, 0.4);
+        }
+
+        .passcode-display {
+            background: rgba(2, 26, 12, 0.6);
+            border: 2px solid #52b788;
+            border-radius: 12px;
+            font-size: 1.4rem;
+            letter-spacing: 8px;
+            color: #b3ffc9;
+            padding: 10px;
+            margin-bottom: 12px;
+            min-height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .keypad {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
+
+        .key-btn {
+            background: rgba(82, 183, 136, 0.2);
+            border: 1px solid rgba(82, 183, 136, 0.5);
+            color: #e6fdf2;
+            font-size: 1.1rem;
+            font-weight: bold;
+            padding: 10px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .key-btn:hover {
+            background: #2ec4b6;
+            color: #021a0c;
+        }
+
+        #unlockAnimation {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(2, 26, 12, 0.92);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+
+        #unlockAnimation.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .unlock-box {
+            text-align: center;
+            transform: scale(0.5);
+            transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        #unlockAnimation.active .unlock-box {
+            transform: scale(1);
+        }
+
+        .unlock-icon {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+
+        .unlock-text {
+            font-size: 2rem;
+            color: #b3ffc9;
+            font-weight: bold;
+        }
+
+        .celebration-layout {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            background: rgba(6, 56, 27, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 2px solid rgba(82, 183, 136, 0.4);
+            border-radius: 20px;
+            padding: 20px 14px;
+            box-shadow: 0 15px 35px rgba(2, 26, 12, 0.6);
+            z-index: 10;
+            max-width: 380px;
+            width: 100%;
+        }
+
+        .flower-side {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .big-flower-img {
+            width: min(140px, 45vw);
+            height: auto;
+            border-radius: 10px;
+            filter: drop-shadow(0 0 15px rgba(0, 0, 0, 0.9));
+            animation: rotate-steady 12s linear infinite;
+            position: relative;
+            z-index: 2;
+        }
+
+        @keyframes rotate-steady {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .flower-emoji-container {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .pink-particle {
+            position: absolute;
+            top: 50%; left: 50%;
+            font-size: 1.1rem;
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(0.3);
+            animation: burst-out 3.5s ease-out infinite;
+        }
+
+        .pink-particle:nth-child(1) { animation-delay: 0s;   --end-x: -60px; --end-y: -60px; }
+        .pink-particle:nth-child(2) { animation-delay: 0.6s; --end-x: 65px;  --end-y: -55px; }
+        .pink-particle:nth-child(3) { animation-delay: 1.2s; --end-x: -70px; --end-y: 15px;   }
+        .pink-particle:nth-child(4) { animation-delay: 1.8s; --end-x: 75px;  --end-y: 20px;   }
+
+        @keyframes burst-out {
+            0% { transform: translate(-50%, -50%) scale(0.3) rotate(0deg); opacity: 0; }
+            20% { opacity: 1; }
+            100% { transform: translate(calc(-50% + var(--end-x)), calc(-50% + var(--end-y))) scale(1.1) rotate(25deg); opacity: 0; }
+        }
+
+        .controls-side {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .calligraphy-title {
+            font-family: 'Great Vibes', cursive;
+            font-size: 1.9rem;
+            color: #b3ffc9;
+            text-shadow: 0 0 10px rgba(179, 255, 201, 0.5);
+            line-height: 1.1;
+        }
+
+        .music-control-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            background: rgba(2, 26, 12, 0.5);
+            border: 1px solid rgba(82, 183, 136, 0.4);
+            padding: 10px 12px;
+            border-radius: 14px;
+            width: 100%;
+        }
+
+        .music-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .music-label {
+            font-size: 0.95rem;
+            color: #e6fdf2;
+            font-weight: 600;
+        }
+
+        .play-music-btn {
+            background: #2ec4b6;
+            color: #021a0c;
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            font-size: 0.9rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 10px rgba(46, 196, 182, 0.6);
+        }
+
+        #nextPartBtn {
+            display: none;
+            background: linear-gradient(135deg, #2ec4b6, #52b788);
+            color: #021a0c;
+            border: none;
+            padding: 6px 16px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(46, 196, 182, 0.4);
+        }
+
+        /* --- STABLE MOBILE SCRAPBOOK LAYOUT --- */
+        #screen4 {
+            text-align: center;
+            padding: 4px;
+        }
+
+        .scrapbook-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            max-width: 360px;
+            margin: 0 auto;
+            gap: 8px;
+        }
+
+        .scrapbook {
+            position: relative;
+            width: 100%;
+            height: 72vh;
+            max-height: 440px;
+            background: #ebd7b2;
+            border-radius: 8px;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.7);
+            border: 2px solid #543412;
+            overflow: hidden;
+        }
+
+        .scrapbook-sheet {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0; left: 0;
+            display: none;
+            flex-direction: column;
+            background-color: #ebd7b2;
+            background-image: 
+                linear-gradient(90deg, rgba(120, 80, 40, 0.12) 0px, transparent 25px),
+                radial-gradient(circle at 50% 50%, rgba(245, 232, 205, 0.9) 0%, rgba(205, 175, 130, 0.95) 100%);
+            border-left: 8px solid #543412;
+            padding: 12px 10px;
+            justify-content: space-between;
+            align-items: center;
+            text-align: center;
+        }
+
+        .scrapbook-sheet.active-sheet {
+            display: flex;
+        }
+
+        .scrap-face {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .scrap-face.old-paper-cover {
+            background-color: #38220d;
+            background-image: linear-gradient(135deg, rgba(80, 50, 20, 0.6) 0%, rgba(20, 10, 5, 0.9) 100%);
+            border-left: 12px solid #1a0f05;
+        }
+
+        .cover-frame-box {
+            border: 2px double #d4af37;
+            border-radius: 8px;
+            padding: 14px 8px;
+            width: 100%;
+            background: rgba(40, 22, 8, 0.6);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin: auto 0;
+        }
+
+        .old-paper-cover h2 {
+            font-family: 'Vintage Melinda', 'Great Vibes', cursive;
+            font-size: 2.3rem;
+            color: #f3e5ab;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9);
+            line-height: 1.1;
+        }
+
+        .badge-sticker {
+            background: #ff70a6;
+            color: #fff;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            transform: rotate(-2deg);
+            flex-shrink: 0;
+        }
+
+        .badge-sticker.green-badge {
+            background: #2ec4b6;
+            color: #021a0c;
+            transform: rotate(2deg);
+        }
+
+        .washi-tape-horizontal {
+            width: 70px;
+            height: 10px;
+            background: rgba(255, 183, 178, 0.85);
+            border-top: 1px dashed rgba(255,255,255,0.9);
+            border-bottom: 1px dashed rgba(255,255,255,0.9);
+            margin: 2px auto;
+            flex-shrink: 0;
+        }
+
+        .scrap-content-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            gap: 4px;
+            width: 100%;
+            overflow-y: auto;
+            max-height: 290px;
+            padding: 4px;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(84, 52, 18, 0.4) transparent;
+        }
+
+        .scrap-content-area::-webkit-scrollbar {
+            width: 3px;
+        }
+        .scrap-content-area::-webkit-scrollbar-thumb {
+            background: rgba(84, 52, 18, 0.4);
+            border-radius: 4px;
+        }
+
+        .scrap-content-area h2 {
+            font-family: 'Vintage Melinda', 'Great Vibes', cursive;
+            font-size: 1.8rem;
+            color: #2c5e3b;
+            line-height: 1.1;
+        }
+
+        .scrap-content-area p {
+            font-family: 'Vintage Melinda', cursive, sans-serif;
+            font-size: 1.1rem;
+            color: #3b2b1a;
+            line-height: 1.4;
+            font-weight: normal;
+            text-align: left;
+            white-space: pre-line;
+            width: 100%;
+        }
+
+        .page-footer-note {
+            font-size: 0.7rem;
+            color: #543412;
+            font-weight: bold;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .doodle-icon {
+            font-size: 2rem;
+        }
+
+        .scrap-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 360px;
+            background: rgba(2, 26, 12, 0.85);
+            padding: 8px 12px;
+            border-radius: 12px;
+            border: 1px solid rgba(82, 183, 136, 0.4);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.5);
+        }
+
+        .scrap-btn {
+            background: linear-gradient(135deg, #ff70a6, #ff9770);
+            color: #021a0c;
+            border: none;
+            padding: 6px 12px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            border-radius: 14px;
+            cursor: pointer;
+        }
+
+        .scrap-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .page-indicator {
+            font-size: 0.8rem;
+            color: #ffb3c6;
+            font-weight: 600;
+        }
+
+        .book-next-part-btn {
+            background: linear-gradient(135deg, #ff70a6, #ff9770);
+            color: #021a0c;
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            font-size: 0.9rem;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 6px;
+        }
+
+        #screen5 {
+            text-align: center;
+        }
+
+        .flower-final-layout {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            max-width: 380px;
+            width: 100%;
+            z-index: 10;
+            padding: 10px;
+        }
+
+        .neon-pink-title {
+            font-family: 'Symphonie Calligraphy DEMO', 'Great Vibes', cursive;
+            font-size: 2.2rem;
+            color: #ff2a85;
+            text-shadow: 0 0 8px #ff2a85, 0 0 15px #ff2a85;
+            line-height: 1.1;
+            text-align: center;
+        }
+
+        .pink-flower-box {
+            position: relative;
+            cursor: pointer;
+            padding: 8px;
+            display: inline-block;
+        }
+
+        .pink-flower-img {
+            width: min(170px, 55vw);
+            height: auto;
+            position: relative;
+            z-index: 2;
+            filter: drop-shadow(0 0 15px rgba(255, 42, 133, 0.8));
+        }
+
+        .pink-aura {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 130px;
+            height: 130px;
+            background: radial-gradient(circle, rgba(255, 42, 133, 0.85) 0%, rgba(255, 0, 127, 0.4) 50%, transparent 70%);
+            border-radius: 50%;
+            z-index: 1;
+            filter: blur(10px);
+        }
+
+        .end-site-btn {
+            background: rgba(255, 42, 133, 0.2);
+            color: #ff66b2;
+            border: 2px solid #ff2a85;
+            padding: 7px 18px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            border-radius: 30px;
+            cursor: pointer;
+            margin-top: 8px;
+            box-shadow: 0 0 12px rgba(255, 42, 133, 0.4);
+        }
+
+        .reasons-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(10, 0, 20, 0.88);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            z-index: 200;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+        }
+
+        .reasons-box {
+            background: rgba(30, 10, 50, 0.95);
+            border: 2px solid #ff2a85;
+            border-radius: 14px;
+            width: 100%;
+            max-width: 400px;
+            height: 82vh;
+            padding: 16px 12px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 0 25px rgba(255, 42, 133, 0.5);
+        }
+
+        .reasons-header {
+            font-family: 'Symphonie Calligraphy DEMO', 'Great Vibes', cursive;
+            font-size: 1.6rem;
+            color: #ff66b2;
+            text-shadow: 0 0 8px #ff2a85;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .reasons-scroll-content {
+            flex: 1;
+            overflow-y: auto;
+            padding-right: 6px;
+            text-align: left;
+            scrollbar-width: thin;
+            scrollbar-color: #ff2a85 transparent;
+        }
+
+        .reasons-scroll-content::-webkit-scrollbar {
+            width: 4px;
+        }
+        .reasons-scroll-content::-webkit-scrollbar-thumb {
+            background: #ff2a85;
+            border-radius: 4px;
+        }
+
+        .reasons-list {
+            list-style-type: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .reasons-list li {
+            font-size: 0.95rem;
+            color: #fce4ec;
+            line-height: 1.35;
+            background: rgba(255, 42, 133, 0.1);
+            padding: 7px 10px;
+            border-radius: 6px;
+            border-left: 3px solid #ff2a85;
+        }
+
+        .close-modal-btn {
+            background: #ff2a85;
+            color: #fff;
+            border: none;
+            padding: 7px 18px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            border-radius: 20px;
+            cursor: pointer;
+            margin-top: 10px;
+            align-self: center;
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="bgMusic" src="v10044g50000d1pu9l7og65r8eaqiu6g.mov" loop></audio>
+
+    <div class="bg-emoji" style="left: 10%; animation-delay: 0s; animation-duration: 8s;">💚</div>
+    <div class="bg-emoji" style="left: 25%; animation-delay: 2s; animation-duration: 12s;">🌿</div>
+    <div class="bg-emoji" style="left: 40%; animation-delay: 1s; animation-duration: 9s;">🌱</div>
+    <div class="bg-emoji" style="left: 60%; animation-delay: 4s; animation-duration: 11s;">🍃</div>
+    <div class="bg-emoji" style="left: 75%; animation-delay: 3s; animation-duration: 10s;">🍀</div>
+    <div class="bg-emoji" style="left: 90%; animation-delay: 1.5s; animation-duration: 13s;">🪴</div>
+
+    <div id="screen1" class="screen active">
+        <div class="card" style="background: transparent; border: none; box-shadow: none;">
+            <div class="envelope-container" onclick="transitionScreens('screen1', 'screen2')">
+                <img src="envelope.png" alt="Envelope" class="envelope-img">
+                <div class="envelope-hint">Open Passcode 🌿</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="screen2" class="screen">
+        <div class="card">
+            <h1>Enter Passcode 🔐</h1>
+            <div class="passcode-display" id="passcodeDisplay">______</div>
+            <div class="keypad">
+                <button class="key-btn" onclick="pressKey('1')">1</button>
+                <button class="key-btn" onclick="pressKey('2')">2</button>
+                <button class="key-btn" onclick="pressKey('3')">3</button>
+                <button class="key-btn" onclick="pressKey('4')">4</button>
+                <button class="key-btn" onclick="pressKey('5')">5</button>
+                <button class="key-btn" onclick="pressKey('6')">6</button>
+                <button class="key-btn" onclick="pressKey('7')">7</button>
+                <button class="key-btn" onclick="pressKey('8')">8</button>
+                <button class="key-btn" onclick="pressKey('9')">9</button>
+                <button class="key-btn" onclick="clearPasscode()">C</button>
+                <button class="key-btn" onclick="pressKey('0')">0</button>
+                <button class="key-btn" onclick="deleteKey()">⌫</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="screen3" class="screen">
+        <div class="celebration-layout">
+            <div class="flower-side">
+                <div class="flower-emoji-container">
+                    <span class="pink-particle">💖</span>
+                    <span class="pink-particle">🌸</span>
+                    <span class="pink-particle">💗</span>
+                    <span class="pink-particle">💕</span>
+                </div>
+                <img src="Preserved Burgundy Rose-Photoroom.png" alt="Preserved Burgundy Rose" class="big-flower-img">
+            </div>
+
+            <div class="controls-side">
+                <div class="calligraphy-title">Happy 8th monthsary, my dearest Ira.</div>
+                
+                <div class="music-control-wrapper">
+                    <div class="music-row">
+                        <span class="music-label">Play music</span>
+                        <button class="play-music-btn" id="playMusicBtn" onclick="toggleMusic()">▶</button>
+                    </div>
+                    <button id="nextPartBtn" onclick="goToWallpaperSection()">next part 🌿</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="screen4" class="screen">
+        <div class="scrapbook-container">
+            <div class="scrapbook" id="realScrapbook">
+                <div class="scrapbook-sheet active-sheet" id="page-0">
+                    <div class="scrap-face old-paper-cover">
+                        <div class="badge-sticker" style="background: #d4af37; color: #1a0f05; font-weight: 800;">Memory Archive</div>
+                        <div class="washi-tape-horizontal" style="background: rgba(212, 175, 55, 0.4);"></div>
+                        <div class="cover-frame-box">
+                            <div class="doodle-icon">🌿</div>
+                            <h2>another month with you</h2>
+                            <p style="color: #f3e5ab; font-weight: 500; font-size: 1rem; text-align: center;">Our special memories written in time... 💚</p>
+                        </div>
+                        <div style="font-size: 0.7rem; color: #d4af37; font-weight: bold; letter-spacing: 2px;">✨ VOLUME VIII ✨</div>
+                    </div>
+                </div>
+
+                <div class="scrapbook-sheet" id="page-1">
+                    <div class="scrap-face">
+                        <div class="badge-sticker green-badge">Page 1</div>
+                        <div class="washi-tape-horizontal"></div>
+                        <div class="scrap-content-area">
+                            <p>Happy 8 months, my love.
+
+I was just sitting here looking at some of our pictures and thinking about how fast time has gone by, but at the same time, it feels like I have known you forever. Even with the distance between us, every single day with you still feels so close and natural. I love how we can talk about anything under the sun for hours, or just stay on call while doing our own things without any awkwardness at all.
+
+You are genuinely my safe space from all the noise in the world, and my favorite part of the day is always just getting your messages or hearing your voice. Even the most boring days turn into something special because of you, and you somehow make this distance feel so manageable.
+
+Thank you for loving me so genuinely, for making me smile on my heaviest days, and for being my absolute favorite person. Swerte kay ko nimo, and I am so grateful for every single laugh, video call, late night calls, and virtual moment we share. Wala na gyud koy pangitaon pa kala ra nimo ang tanan.
+
+I am so proud of us, of how we handle the distance, and of how much we have grown together these past eight months. Let us keep choosing each other every single day, no pressure, just pure love and good vibes until we finally get to close the gap.</p>
+                        </div>
+                        <div class="page-footer-note">💚 Forever Yours 💚</div>
+                    </div>
+                </div>
+
+                <div class="scrapbook-sheet" id="page-2">
+                    <div class="scrap-face">
+                        <div class="badge-sticker">Page 2</div>
+                        <div class="washi-tape-horizontal"></div>
+                        <div class="scrap-content-area">
+                            <p>I wanted to dedicate this page to how we handle the hard moments because that is honestly where I knew you were the one. Every relationship has its bad days, and we have definitely had our fair share of misunderstandings, bad moods, and rough patches. But what I love most about us is how we handle those storms. We never let the sun go down on our anger for too long, and we never let our pride get in the way of fixing what is broken. 
+
+Whenever we clash or things get heavy, we do not let things drag out or get worse. We take a breath, listen to each other, and actually try to understand where the other person is coming from. And the best part is that both of us are never too proud to say sorry. When we mess up, we own up to it, we apologize sincerely, and we choose to make it right instead of making excuses. 
+
+Even when we hit rough patches or have our disagreements, you always make it so easy to talk things through and work them out. We are not perfect, and I am sure we will still face difficult days in the future, but I am so confident because I know that no matter what comes, we know how to work as a team to solve it. We fight for each other, never against each other. 
+
+Thank you for always choosing peace over being right, and for putting our relationship above everything else. I love how resilient we are, and I love that every time we fix something between us, we come out stronger, closer, and more in love than before.
+
+Let us keep communicating, keep humbling ourselves when we need to, and keep protecting what we have. I cannot wait for all the days ahead, knowing we can get through literally anything together.</p>
+                        </div>
+                        <div class="page-footer-note">✨ Stronger Together ✨</div>
+                    </div>
+                </div>
+
+                <div class="scrapbook-sheet" id="page-3">
+                    <div class="scrap-face">
+                        <div class="badge-sticker green-badge">Page 3</div>
+                        <div class="washi-tape-horizontal"></div>
+                        <div class="scrap-content-area">
+                            <p>Also about our fight, I have been thinking about it and I realized something important. You mentioned that I was being defensive and acting with too much pride. Honestly, in that moment, I did not even notice I was coming off that way. I was just trying so hard to explain my side, and I am really bad at finding the right words when things get intense.
+
+I am sorry if it felt like I was shutting you out or being stubborn. That was never my intention. When I try to explain myself and mess it up, it ends up sounding like I am making excuses or defending an attitude, when really I am just clumsy at expressing what is inside my head. Looking back, I realize how much it must have frustrated you to feel like you were not being heard, and I hate the thought of making you feel that way.
+
+Thank you for being patient with me even when I am terrible at communicating under pressure. You always find a way to handle me with grace, and I love how we can talk things out until we are both okay again. I am learning from every mistake, and I promise to actively listen more instead of just waiting for my turn to speak. I want to get better at understanding your perspective right away without letting my guard up. 
+
+I love you so much, and I appreciate you more than you know. Every single hurdle we face only teaches me how to love you better and how to be a better partner for you.</p>
+                        </div>
+                        <div class="page-footer-note">💛 Growing With You 💛</div>
+                    </div>
+                </div>
+
+                <div class="scrapbook-sheet" id="page-4">
+                    <div class="scrap-face">
+                        <div class="badge-sticker">Page 4</div>
+                        <div class="washi-tape-horizontal"></div>
+                        <div class="scrap-content-area">
+                            <p>Also, I wanted to clear something up about my old account because I want you to know the exact truth about it. That account was originally from Drie, and both of us used to share it back then. Kato nga acc gi trade ra nako to Drie sakong mlbb acc, murag nag share mi ato ug acc. Tas katong mga repost nag sagol rato namo ni Drie kay akong gi gamit man gyud permi tong usa nako ka account katong lax nga na restrict. Mogamit rako atong account nga akong gi trade kung mag live live ko or mag post post ug highlights. 
+
+And about atong MD nako sa lax wxcht, gikan ra gyud to gi save tas ako ra gi MD. Wala gyud koy ex, wala gani ko kasulay anang M U M U sauna. You are genuinely my first everything, and I would never hide anything from you. I just really wanted to explain this so there is zero awkwardness or misunderstanding between us, because you are the only one I want to be completely transparent with.</p>
+                        </div>
+                        <div class="page-footer-note">🌿 Complete Transparency 🌿</div>
+                    </div>
+                </div>
+
+                <div class="scrapbook-sheet" id="page-5">
+                    <div class="scrap-face">
+                        <div class="badge-sticker green-badge">Page 5</div>
+                        <div class="washi-tape-horizontal"></div>
+                        <div class="scrap-content-area">
+                            <p>Also, I want to share why I am so used to doing everything by myself. Growing up, I was put in an environment where no one really guided me or taught me how to navigate things properly. When I was a kid, my parents were rarely around, and I was often left alone inside the house with no one to talk to. We moved when I was very young, which separated me from my cousins, and I was not allowed to go outside because stepping out meant getting punished. 
+
+Most of the time when my parents were around, the house was filled with hours of arguing and yelling. They still do that to this day, and it has become such a constant source of stress that I eventually had to pull away from that environment. That is also why I love staying at my grandparents house. Even when they have problems, they handle things peacefully and never project their frustrations onto anyone else. 
+
+Whenever I tried to talk to my parents or ask for guidance, they would usually respond with anger, and sometimes they would even lock me outside for hours at night just because they were upset. Because of that, I learned to rely entirely on myself for everything. But because I was just trying to survive day to day, I missed out on learning the essential life skills I needed for my future. As I grew older, taking on my own responsibilities became overwhelming, and I often held myself back from trying new things simply because I did not know where to begin. 
+
+Whenever I tried to share my ambitions, like my dream of pursuing esports, they would dismiss it as a waste of time. When I tried learning things on my own, they would often criticize or discourage me, making me doubt my own capabilities from an early age. 
+
+That is also the biggest reason why I want to return to the Philippines so badly. I have a dream I am determined to build there, and leaving it behind remains my biggest regret. Before we moved here, I was just about to start taking steps toward my esports path, but I was told life would be better here. Instead of things getting better, they only got harder. And that is why I do not want to be with them anymore, because I am tired of seeing all these things for my entire life and nothing ever getting better. 
+
+There is also something else I have been wanting to tell you, but I always struggle to find the right words or figure out how to explain it properly to you. I know this is not a very good explanation, but I hope you will understand. Happy 8th monthsary, and thank you for being my safe space through it all.</p>
+                        </div>
+                        <div class="page-footer-note">✨ My Safe Space ✨</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="scrap-nav">
+                <button class="scrap-btn" id="prevBtn" onclick="changePage(-1)" disabled>Previous</button>
+                <span class="page-indicator" id="pageIndicator">Page 1 of 6</span>
+                <div style="display: flex; align-items: center;">
+                    <button class="scrap-btn" id="nextBtn" onclick="changePage(1)">Next</button>
+                    <button class="book-next-part-btn" onclick="goToFlowerSection()" title="Next Part">➔</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="screen5" class="screen">
+        <div class="flower-final-layout">
+            <h1 class="neon-pink-title">100 reasons why I love you</h1>
+            <div class="pink-flower-box" onclick="openReasonsModal()">
+                <div class="pink-aura"></div>
+                <img src="envelope.png" alt="Envelope" class="pink-flower-img">
+            </div>
+            <button class="end-site-btn" onclick="closeSite()">End Site ❌</button>
+        </div>
+    </div>
+
+    <div class="reasons-modal" id="reasonsModal">
+        <div class="reasons-box">
+            <h2 class="reasons-header">100 reasons why I love you</h2>
+            <div class="reasons-scroll-content">
+                <ul class="reasons-list">
+                    <li>1. Your sweet smile that can instantly brighten up any room you walk into.</li>
+                    <li>2. The way your voice sounds when you are happy and talking fast.</li>
+                    <li>3. How your eyes light up when you talk about your favorite things.</li>
+                    <li>4. The genuine kindness and warmth in your heart.</li>
+                    <li>5. The cute way you scrunch your nose when you are focused.</li>
+                    <li>6. How passionate and dedicated you get about the things you love.</li>
+                    <li>7. The adorable way you laugh at the silliest things.</li>
+                    <li>8. How cute you look when you are sleepy or yawning.</li>
+                    <li>9. The radiant energy you bring everywhere you go.</li>
+                    <li>10. How sweet you get when you are in a playful mood.</li>
+                    <li>11. The cute little nicknames you use for people and things.</li>
+                    <li>12. How thoughtful and observant you are of your surroundings.</li>
+                    <li>13. The way you take care of yourself and value your own well being.</li>
+                    <li>14. How you share random, funny thoughts out of nowhere.</li>
+                    <li>15. The way you are so unapologetically and beautifully yourself.</li>
+                    <li>16. How adorable your giggles sound when something amuses you.</li>
+                    <li>17. The cute photos you take of your daily life and surroundings.</li>
+                    <li>18. How deeply you care about the people close to you.</li>
+                    <li>19. The genuine happiness you radiate when you are in a good mood.</li>
+                    <li>20. How you remember tiny, random details about things.</li>
+                    <li>21. The way you turn ordinary moments into fun memories.</li>
+                    <li>22. How excited you get when telling a good story.</li>
+                    <li>23. The calm and soothing presence you naturally carry.</li>
+                    <li>24. How gentle and soft your tone is when you speak softly.</li>
+                    <li>25. The way you find joy in the simplest little things.</li>
+                    <li>26. How you bring warmth into cold or gloomy days.</li>
+                    <li>27. The way you check up on me and make sure I am okay,</li>
+                    <li>28. How playfully stubborn you can get in a cute way.</li>
+                    <li>29. The sweet and comforting messages you send to make me smile,</li>
+                    <li>30. How your smile completely changes the vibe of your entire face.</li>
+                    <li>31. The great taste you have in music, art, and style.</li>
+                    <li>32. How patiently you listen when people share stories with you.</li>
+                    <li>33. How incredibly beautiful you are both inside and out.</li>
+                    <li>34. The way you carry yourself with so much grace and poise.</li>
+                    <li>35. How pure, genuine, and effortless your personality is.</li>
+                    <li>36. The way you send me the cutest good morning and good night texts,</li>
+                    <li>37. How you make every single season of the year feel brighter.</li>
+                    <li>38. The special kind of charm you hold in everything you do.</li>
+                    <li>39. How comforting your words are when you express your thoughts.</li>
+                    <li>40. The beautiful way you view the world with wonder.</li>
+                    <li>41. Your funny and goofy side that only comes out when you are relaxed.</li>
+                    <li>42. The way you share your favorite songs and music recommendations with me,</li>
+                    <li>43. How cute you sound when you are half asleep or waking up.</li>
+                    <li>44. The warm and welcoming feeling you give off to others.</li>
+                    <li>45. The way you always make time to talk to me despite your busy schedule,</li>
+                    <li>46. The way you support and cheer me on in everything I do,</li>
+                    <li>47. How easily you appreciate the beauty in small details.</li>
+                    <li>48. The way you listen to all my endless stories with so much patience,</li>
+                    <li>49. How gracefully you handle unexpected situations.</li>
+                    <li>50. The inspiring way you strive to grow and learn every day.</li>
+                    <li>51. How pure your intentions are in all your actions.</li>
+                    <li>52. The peaceful vibe you bring into quiet spaces.</li>
+                    <li>53. Your natural confidence that shines through when you speak.</li>
+                    <li>54. The cute updates you share about your daily adventures.</li>
+                    <li>55. How musical and lovely your laughter is to hear.</li>
+                    <li>56. The way you instantly turn my bad moods around with your sweetness,</li>
+                    <li>57. How closely you notice things that others usually ignore.</li>
+                    <li>58. The way you treat me with so much care and genuine affection,</li>
+                    <li>59. How soft your voice gets when you whisper or feels tired.</li>
+                    <li>60. The vibrant energy you bring to every single day.</li>
+                    <li>61. That gorgeous glow you have whenever you are genuinely happy.</li>
+                    <li>62. The way you make me feel so special and valued through your actions,</li>
+                    <li>63. Your creative imagination that makes everything more colorful.</li>
+                    <li>64. The fun food combinations and cravings you talk about.</li>
+                    <li>65. How cute you look when you concentrate hard on a task.</li>
+                    <li>66. The way you bring so much peace into my life just by being there,</li>
+                    <li>67. Your adorable little quirks that make you completely unique.</li>
+                    <li>68. The way your presence alone can fix my entire day,</li>
+                    <li>69. Your exciting energy that is so contagious to watch.</li>
+                    <li>70. How much you appreciate art, music, and creativity.</li>
+                    <li>71. The way you shower me with so much love despite the distance,</li>
+                    <li>72. The sparkle in your eyes when you talk about your big dreams.</li>
+                    <li>73. How fun you make even the most routine daily activities look.</li>
+                    <li>74. The way you show me how pure your heart is every single day,</li>
+                    <li>75. The comforting way you reassure me whenever I am overthinking,</li>
+                    <li>76. Your beautiful soul that shines brightly through your actions.</li>
+                    <li>77. The way you make me laugh until my stomach hurts with your jokes,</li>
+                    <li>78. The colorful and vibrant perspective you have on life.</li>
+                    <li>79. How you find beauty in poetry, songs, and stories.</li>
+                    <li>80. The cute little pout you make when things do not go your way.</li>
+                    <li>81. The pure intentions behind everything you choose to do.</li>
+                    <li>82. The sudden bursts of playful energy you get out of nowhere.</li>
+                    <li>83. Your gorgeous smile that remains your best feature.</li>
+                    <li>84. The way you wrap me up in your comforting words when I am stressed,</li>
+                    <li>85. The way you show up for me and stay by my side,</li>
+                    <li>86. How proud you must be of all the things you accomplish.</li>
+                    <li>87. Your bright energy that instantly chases away gloomy moods.</li>
+                    <li>88. How fast time seems to fly when you are having fun.</li>
+                    <li>89. The way you make me feel like the luckiest person in the world just by loving me,</li>
+                    <li>90. The sweet and cheerful tone you use in your updates.</li>
+                    <li>91. The way you make me feel so safe and at home with you,</li>
+                    <li>92. The funny and endearing little habits you do without realizing.</li>
+                    <li>93. The way your love heals and touches my soul so deeply,</li>
+                    <li>94. The soothing and pleasant tone of your everyday voice.</li>
+                    <li>95. The way you make every single day feel like a blessing just by being in it,</li>
+                    <li>96. Your stunning eyes that capture so much expression and life.</li>
+                    <li>97. Your lovely heart that deserves all the goodness in the world.</li>
+                    <li>98. Your sweet existence that makes the world a much better place.</li>
+                    <li>99. The way you make me fall for you more and more every single day,</li>
+                    <li>100. Simply because you are you, and you are an absolute masterpiece of a human being.</li>
+                </ul>
+            </div>
+            <button class="close-modal-btn" onclick="closeReasonsModal()">Close 💚</button>
+        </div>
+    </div>
+
+    <div id="unlockAnimation">
+        <div class="unlock-box">
+            <div class="unlock-icon">🔓✨</div>
+            <div class="unlock-text">Unlocked! 💚</div>
+        </div>
+    </div>
+
+    <script>
+        let currentPasscode = "";
+        const secretCode = "010426";
+        let isPlaying = false;
+        let currentPageIndex = 0;
+        const totalPages = 6;
+
+        function transitionScreens(currentId, nextId) {
+            const currentEl = document.getElementById(currentId);
+            const nextEl = document.getElementById(nextId);
+
+            currentEl.classList.add('fade-out');
+            
+            setTimeout(() => {
+                currentEl.classList.remove('active', 'fade-out');
+                nextEl.classList.add('active');
+            }, 500);
+        }
+
+        function pressKey(num) {
+            if (currentPasscode.length < 6) {
+                currentPasscode += num;
+                updateDisplay();
+                
+                if (currentPasscode.length === 6) {
+                    checkPasscode();
+                }
+            }
+        }
+
+        function deleteKey() {
+            currentPasscode = currentPasscode.slice(0, -1);
+            updateDisplay();
+        }
+
+        function clearPasscode() {
+            currentPasscode = "";
+            updateDisplay();
+        }
+
+        function updateDisplay() {
+            let displayStr = "";
+            for (let i = 0; i < 6; i++) {
+                if (i < currentPasscode.length) {
+                    displayStr += "•";
+                } else {
+                    displayStr += "_";
+                }
+            }
+            document.getElementById('passcodeDisplay').innerText = displayStr;
+        }
+
+        function checkPasscode() {
+            if (currentPasscode === secretCode) {
+                const animOverlay = document.getElementById('unlockAnimation');
+                animOverlay.classList.add('active');
+
+                setTimeout(() => {
+                    animOverlay.classList.remove('active');
+                    transitionScreens('screen2', 'screen3');
+                }, 1400);
+            } else {
+                setTimeout(() => {
+                    currentPasscode = "";
+                    updateDisplay();
+                }, 400);
+            }
+        }
+
+        function toggleMusic() {
+            const music = document.getElementById('bgMusic');
+            const btn = document.getElementById('playMusicBtn');
+            const nextBtn = document.getElementById('nextPartBtn');
+
+            if (!isPlaying) {
+                music.play().then(() => {
+                    isPlaying = true;
+                    btn.innerText = "❚❚";
+                    nextBtn.style.display = "block";
+                }).catch(err => {
+                    console.log("Audio playback prevented:", err);
+                });
+            } else {
+                music.pause();
+                isPlaying = false;
+                btn.innerText = "▶";
+            }
+        }
+
+        function goToWallpaperSection() {
+            document.body.classList.add('wallpaper-bg');
+            transitionScreens('screen3', 'screen4');
+        }
+
+        function goToFlowerSection() {
+            transitionScreens('screen4', 'screen5');
+        }
+
+        function openReasonsModal() {
+            document.getElementById('reasonsModal').style.display = 'flex';
+        }
+
+        function closeReasonsModal() {
+            document.getElementById('reasonsModal').style.display = 'none';
+        }
+
+        function closeSite() {
+            document.body.innerHTML = `
+                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; text-align: center; color: #ff66b2; background: #021a0c; font-family: 'Segoe UI', sans-serif; padding: 20px;">
+                    <h1 style="font-family: 'Great Vibes', cursive; font-size: 2.5rem; margin-bottom: 10px;">Thank you for reading, my love. 💚</h1>
+                    <p style="font-size: 1.1rem; color: #b3ffc9;">You can now safely close this tab.</p>
+                </div>
+            `;
+        }
+
+        function changePage(direction) {
+            const nextIndex = currentPageIndex + direction;
+            if (nextIndex >= 0 && nextIndex < totalPages) {
+                document.getElementById(`page-${currentPageIndex}`).classList.remove('active-sheet');
+                currentPageIndex = nextIndex;
+                document.getElementById(`page-${currentPageIndex}`).classList.add('active-sheet');
+
+                document.getElementById('pageIndicator').innerText = `Page ${currentPageIndex + 1} of ${totalPages}`;
+                document.getElementById('prevBtn').disabled = (currentPageIndex === 0);
+                document.getElementById('nextBtn').disabled = (currentPageIndex === totalPages - 1);
+            }
+        }
+
+        // Swipe Gesture Handling for Mobile Devices
+        let touchStartX = 0;
+        let touchEndX = 0;
+        const scrapbookEl = document.getElementById('realScrapbook');
+
+        scrapbookEl.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+
+        scrapbookEl.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            let distance = touchEndX - touchStartX;
+            if (Math.abs(distance) > 40) {
+                if (distance < 0) {
+                    changePage(1); // Swipe Left -> Next Page
+                } else {
+                    changePage(-1); // Swipe Right -> Previous Page
+                }
+            }
+        }, { passive: true });
+    </script>
+</body>
+</html>
